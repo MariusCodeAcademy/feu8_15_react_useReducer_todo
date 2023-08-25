@@ -6,15 +6,19 @@ function counterReducer(state, action) {
   console.log('state ===', state);
   console.log('action ===', action);
   // state.countNum = 5 // negalima
-  if (action === 'UP') {
-    return { countNum: state.countNum + 1 };
-  } else if (action === 'DOWN') {
-    return { countNum: state.countNum - 1 };
-  } else if (action === 'RESET') {
-    return { countNum: 0 };
+  switch (action.type) {
+    case 'UP':
+      return { countNum: state.countNum + 1 };
+    case 'DOWN':
+      return { countNum: state.countNum - 1 };
+    case 'RESET':
+      return { countNum: 0 };
+    case 'UPBY':
+      return { countNum: state.countNum + action.payload };
+    default:
+      console.warn('tipas nerastas');
+      return state;
   }
-
-  return state;
 }
 
 export default function Counter() {
@@ -27,18 +31,24 @@ export default function Counter() {
   });
   // console.log('state ===', state);
   function goUp() {
-    dispatch('UP');
+    dispatch({ type: 'UP' });
     // setState({ countNum: state.countNum + 1 });
     // setCred({ ...cred, email: 'james@bond.com' });
   }
   function goDown() {
-    dispatch('DOWN');
+    dispatch({ type: 'DOWN' });
     // setState({ countNum: state.countNum - 1 });
   }
   function reset() {
     // make it work
-    dispatch('RESET');
+    dispatch({ type: 'RESET' });
   }
+
+  function upBy(howMuch) {
+    console.log('howMuch ===', howMuch);
+    dispatch({ type: 'UPBY', payload: howMuch });
+  }
+
   // console.log('cred ===', cred);
   return (
     <div className='card'>
@@ -48,7 +58,7 @@ export default function Counter() {
         <button onClick={goUp}>UP</button>
         <button onClick={goDown}>DOWN</button>
         <button onClick={reset}>Reset</button>
-        <button>up by 10</button>
+        <button onClick={() => upBy(10)}>up by 10</button>
       </div>
     </div>
   );
