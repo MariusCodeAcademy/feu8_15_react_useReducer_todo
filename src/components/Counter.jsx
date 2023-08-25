@@ -1,20 +1,20 @@
 import { useReducer, useState } from 'react';
 
-const initCounterValue = { countNum: 0 };
+const initCounterValue = { countNum: 0, countTitle: 'Push Ups' };
 
 function counterReducer(state, action) {
   console.log('state ===', state);
-  console.log('action ===', action);
+  // console.log('action ===', action);
   // state.countNum = 5 // negalima
   switch (action.type) {
     case 'UP':
-      return { countNum: state.countNum + 1 };
+      return { ...state, countNum: state.countNum + 1 };
     case 'DOWN':
-      return { countNum: state.countNum - 1 };
+      return { ...state, countNum: state.countNum - 1 };
     case 'RESET':
-      return { countNum: 0 };
+      return initCounterValue;
     case 'UPBY':
-      return { countNum: state.countNum + action.payload };
+      return { ...state, countNum: state.countNum + action.payload };
     default:
       console.warn('tipas nerastas');
       return state;
@@ -22,7 +22,10 @@ function counterReducer(state, action) {
 }
 
 export default function Counter() {
-  const [state, dispatch] = useReducer(counterReducer, initCounterValue);
+  const [state, dispatch] = useReducer(counterReducer, {
+    countNum: 0,
+    countTitle: 'Push Ups',
+  });
   // const [state, setState] = useState({ countNum: 0 });
   const [cred, setCred] = useState({
     email: '',
@@ -52,7 +55,7 @@ export default function Counter() {
   // console.log('cred ===', cred);
   return (
     <div className='card'>
-      <h2>Counter</h2>
+      <h2>{state.countTitle}</h2>
       <p className='counter'>{state.countNum}</p>
       <div>
         <button onClick={goUp}>UP</button>
