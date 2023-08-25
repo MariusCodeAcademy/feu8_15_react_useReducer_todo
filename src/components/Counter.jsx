@@ -5,11 +5,13 @@ const initCounterValue = { countNum: 0 };
 function counterReducer(state, action) {
   console.log('state ===', state);
   console.log('action ===', action);
-
+  // state.countNum = 5 // negalima
   if (action === 'UP') {
     return { countNum: state.countNum + 1 };
   } else if (action === 'DOWN') {
     return { countNum: state.countNum - 1 };
+  } else if (action === 'RESET') {
+    return { countNum: 0 };
   }
 
   return state;
@@ -35,6 +37,7 @@ export default function Counter() {
   }
   function reset() {
     // make it work
+    dispatch('RESET');
   }
   // console.log('cred ===', cred);
   return (
@@ -44,7 +47,8 @@ export default function Counter() {
       <div>
         <button onClick={goUp}>UP</button>
         <button onClick={goDown}>DOWN</button>
-        <button>Reset</button>
+        <button onClick={reset}>Reset</button>
+        <button>up by 10</button>
       </div>
     </div>
   );
