@@ -1,13 +1,28 @@
+import { useState } from 'react';
+
 export default function Counter() {
-  function goUp() {}
-  function goDown() {}
+  const [value, setValue] = useState(0);
+  const [cred, setCred] = useState({
+    email: '',
+    pass: 'secret',
+    town: 'Kaunas',
+  });
+
+  function goUp() {
+    setValue(value + 1);
+    setCred({ ...cred, email: 'james@bond.com' });
+  }
+  function goDown() {
+    setValue(value - 1);
+  }
+  console.log('cred ===', cred);
   return (
-    <div>
+    <div className='card'>
       <h2>Counter</h2>
-      <p className='couner'>0</p>
+      <p className='counter'>{value}</p>
       <div>
-        <button>UP</button>
-        <button>DOWN</button>
+        <button onClick={goUp}>UP</button>
+        <button onClick={goDown}>DOWN</button>
       </div>
     </div>
   );

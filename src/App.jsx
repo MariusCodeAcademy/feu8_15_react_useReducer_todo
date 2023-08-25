@@ -1,9 +1,11 @@
 import './App.css';
+import Counter from './components/Counter';
 
 export default function App() {
   return (
-    <div>
-      <h1>New topic</h1>
+    <div className='container'>
+      <h1>Use reducer</h1>
+      <Counter />
     </div>
   );
 }
