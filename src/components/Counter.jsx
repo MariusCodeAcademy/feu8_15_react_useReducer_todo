@@ -15,6 +15,8 @@ function counterReducer(state, action) {
       return initCounterValue;
     case 'UPBY':
       return { ...state, countNum: state.countNum + action.payload };
+    case 'EDIT_TITLE':
+      return { ...state, countTitle: action.payload };
     default:
       console.warn('tipas nerastas');
       return state;
@@ -52,9 +54,19 @@ export default function Counter() {
     dispatch({ type: 'UPBY', payload: howMuch });
   }
 
+  function titleChange(event) {
+    dispatch({ type: 'EDIT_TITLE', payload: event.target.value });
+  }
+
   // console.log('cred ===', cred);
   return (
     <div className='card'>
+      <input
+        value={state.countTitle}
+        onChange={titleChange}
+        type='text'
+        placeholder='Change title'
+      />
       <h2>{state.countTitle}</h2>
       <p className='counter'>{state.countNum}</p>
       <div>
