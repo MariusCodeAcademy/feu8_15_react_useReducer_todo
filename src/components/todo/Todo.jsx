@@ -7,8 +7,11 @@ const initTodos = [
 function Todo() {
   // sukirti useReducer() fn
   // atvaizduoti sarasa is state
+  // atvaizdtuoti todo kurie yra baigti perbrauktus ir pilkus (prideti klase)
   // padaryti kad eitu prideti todo
+  // sukuriant nauja todo prideti data i date
   // padaryti kad eitu istrinti todo
+  // padaryti kad paspaudus ant title todo taptu baigtas (done: false|true)
   // suskaidyti i atskirus komponentus
   return (
     <div>
@@ -26,7 +29,7 @@ function Todo() {
       <ul>
         {/* <TodoItem item={item} */}
         <li>
-          Buy Milk <button>delete</button>
+          <span>Buy Milk (id) </span> <button>delete (id)</button>
         </li>
         <li>Do sports</li>
         <li>Pet a cat</li>
