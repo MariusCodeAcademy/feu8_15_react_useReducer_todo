@@ -6,7 +6,24 @@ const initTodos = [
   { id: 3, title: 'Do a 100 pushups', done: false, date: '' },
 ];
 
-function todoReducer(state, action) {}
+function todoReducer(state, action) {
+  let newTodoObj;
+  switch (action.type) {
+    case 'ADD':
+      // prideti nauja obj
+      newTodoObj = {
+        id: +new Date(),
+        title: action.payload,
+        done: false,
+        date: new Date().toLocaleDateString(),
+      };
+      console.log('newTodoObj ===', newTodoObj);
+      return [...state, newTodoObj];
+    default:
+      console.warn('action type not found');
+      return state;
+  }
+}
 
 function Todo() {
   const [newTodoVal, setNewTodoVal] = useState('');
@@ -20,15 +37,28 @@ function Todo() {
   // padaryti kad paspaudus ant title todo taptu baigtas (done: false|true)
   // suskaidyti i atskirus komponentus
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log('submit');
+
+    dispatch({ type: 'ADD', payload: newTodoVal });
+  }
+
   console.log('state ===', state);
   return (
     <div>
       <h2>Welcome to our Todo</h2>
       <p>{state.map(({ title }) => title).join(', ')}</p>
-      <form>
+      <p>ivesta: {newTodoVal}</p>
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <legend>Add todo</legend>
-          <input type='text' placeholder='Add todo' />
+          <input
+            onChange={(e) => setNewTodoVal(e.target.value)}
+            value={newTodoVal}
+            type='text'
+            placeholder='Add todo'
+          />
           <button type='submit'>Add</button>
         </fieldset>
       </form>
@@ -36,11 +66,14 @@ function Todo() {
       {/* <TodoList list={todos} */}
       <ul>
         {/* <TodoItem item={item} */}
-        <li>
-          <span>Buy Milk (id) </span> <button>delete (id)</button>
-        </li>
-        <li>Do sports</li>
-        <li>Pet a cat</li>
+        {state.map((tObj) => (
+          <li key={tObj.id}>
+            <span>
+              {tObj.title} (id{tObj.id}){' '}
+            </span>{' '}
+            <button>delete (id)</button>
+          </li>
+        ))}
       </ul>
     </div>
   );
